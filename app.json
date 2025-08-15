@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "scheme": "acme",
+    "plugins": [
+      "expo-router",
+      "expo-web-browser"
+    ],
+    "name": "MyApp",
+    "slug": "MyApp"
+  }
+}

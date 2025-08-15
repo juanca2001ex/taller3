@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { View, StyleSheet, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { Text, Switch } from 'react-native-paper';
 import { router } from 'expo-router';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Configuracion() {
   const [notificaciones, setNotificaciones] = useState(false);
@@ -17,48 +19,61 @@ export default function Configuracion() {
     );
   };
 
-  const renderOption = (title, onPress, rightElement = null) => (
+  const renderOption = (icon, title, onPress, rightElement = null) => (
     <TouchableOpacity style={styles.optionBox} onPress={onPress} activeOpacity={0.7}>
-      <Text style={styles.optionText}>{title}</Text>
+      <View style={styles.optionLeft}>
+        <MaterialCommunityIcons name={icon} size={24} color="#4A55A2" />
+        <Text style={styles.optionText}>{title}</Text>
+      </View>
       {rightElement}
     </TouchableOpacity>
   );
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ padding: 24 }}>
-      <Text style={styles.title}>Ajustes</Text>
+    <View style={styles.container}>
+      {/* Encabezado con degradado */}
+      <LinearGradient colors={['#4A55A2', '#6C79D4']} style={styles.header}>
+        <Text style={styles.headerTitle}>Ajustes</Text>
+      </LinearGradient>
 
-      {renderOption('Cuenta', () => router.push('/cuenta'))}
+      <ScrollView contentContainerStyle={{ padding: 20 }}>
+        {renderOption('account-circle', 'Cuenta', () => router.push('/cuenta'))}
 
-      <View style={styles.optionBox}>
-        <Text style={styles.optionText}>Notificaciones</Text>
-        <Switch
-          value={notificaciones}
-          onValueChange={() => setNotificaciones(!notificaciones)}
-        />
-      </View>
+        {renderOption(
+          'bell-ring',
+          'Notificaciones',
+          null,
+          <Switch
+            value={notificaciones}
+            onValueChange={() => setNotificaciones(!notificaciones)}
+            color="#4A55A2"
+          />
+        )}
 
-      {renderOption('Privacidad', () => router.push('/privacidad'))}
-      {renderOption('Seguridad', () => router.push('/seguridad'))}
-      {renderOption('Ayuda', () => router.push('/ayuda'))}
+        {renderOption('shield-lock', 'Privacidad', () => router.push('/privacidad'))}
+        {renderOption('security', 'Seguridad', () => router.push('/seguridad'))}
+        {renderOption('help-circle', 'Ayuda', () => router.push('/ayuda'))}
 
-      <TouchableOpacity onPress={handleCerrarSesion} activeOpacity={0.7} style={styles.logoutBox}>
-        <Text style={styles.logoutText}>Cerrar sesión</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        {/* Botón de cerrar sesión */}
+        <TouchableOpacity onPress={handleCerrarSesion} style={styles.logoutBtn} activeOpacity={0.8}>
+          <MaterialCommunityIcons name="logout" size={22} color="#fff" />
+          <Text style={styles.logoutText}>Cerrar sesión</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f7f7f7',
+  container: { flex: 1, backgroundColor: '#f4f6fc' },
+  header: {
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    elevation: 4,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 24,
-  },
+  headerTitle: { fontSize: 26, fontWeight: 'bold', color: '#fff' },
   optionBox: {
     backgroundColor: '#fff',
     paddingVertical: 16,
@@ -68,23 +83,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
+    elevation: 2,
   },
-  optionText: {
-    fontSize: 16,
-    color: '#333',
+  optionLeft: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  optionText: { fontSize: 16, color: '#333' },
+  logoutBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#E74C3C',
+    paddingVertical: 14,
+    borderRadius: 12,
+    marginTop: 30,
   },
-  logoutBox: {
-    marginTop: 32,
-    alignSelf: 'center',
-  },
-  logoutText: {
-    color: '#243cc6ff',
-    fontSize: 16,
-  },
+  logoutText: { color: '#fff', fontSize: 16, fontWeight: 'bold', marginLeft: 8 },
 });

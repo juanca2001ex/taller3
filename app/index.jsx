@@ -1,150 +1,66 @@
-import { ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { List, Text } from 'react-native-paper';
 import { useRouter } from 'expo-router';
+import * as Animatable from 'react-native-animatable';
 
 export default function Index() {
   const router = useRouter();
 
+  const items = [
+    { title: 'Autor', icon: 'account-tie', color: '#ff7b54', route: '/autor' },
+    { title: 'Inicio de Sesión', icon: 'lock-outline', color: '#ff2d55', route: '/inicio-sesion' },
+    { title: 'Pantalla Principal', icon: 'home-outline', color: '#5e88fc', route: '/pantalla-principal' },
+    { title: 'Lista de Elementos', icon: 'format-list-bulleted-square', color: '#ff9800', route: '/lista-elementos' },
+    { title: 'Detalle de Elemento', icon: 'file-document-outline', color: '#9b59b6', route: '/detalle-elemento' },
+    { title: 'Formulario de Registro', icon: 'account-plus-outline', color: '#4caf50', route: '/formulario-registro' },
+    { title: 'Configuración', icon: 'cog-outline', color: '#363636', route: '/configuracion' },
+    { title: 'Perfil de Usuario', icon: 'account-circle-outline', color: '#2196f3', route: '/perfil-usuario' },
+    { title: 'Lista de Servicios', icon: 'briefcase-outline', color: '#00bcd4', route: '/lista-servicios' },
+  ];
+
   return (
-    <ScrollView style={{ padding: 20, backgroundColor: '#5e5b73ff' }}>
-      <Text style={{ fontSize: 45, fontWeight: 'bold', marginBottom: 25, textAlign: '' }}>
-        Pantallas
-      </Text>
+    <ScrollView style={styles.container}>
+      <Text style={styles.header}>📱 Menú Principal</Text>
 
-       <List.Item
-        title="Autor"
-        titleStyle={{ fontSize: 20, fontWeight: '600' }}
-        style={{
-          backgroundColor: '#f9f8ff',
-          borderRadius: 14,
-          marginBottom: 12,
-          padding: 4,
-          elevation: 2,
-        }}
-        left={() => <List.Icon icon="account" color="#525151ff" />}
-        right={() => <List.Icon icon="chevron-right" color="#ccc" />}
-        onPress={() => router.push('/autor')}
-      />
-
-      <List.Item
-        title="Inicio de Sesión"
-        titleStyle={{ fontSize: 20, fontWeight: '600' }}
-        style={{
-          backgroundColor: '#f9f8ff',
-          borderRadius: 14,
-          marginBottom: 12,
-          padding: 4,
-          elevation: 2,
-        }}
-        left={() => <List.Icon icon="lock" color="#ff2d55" />}
-        right={() => <List.Icon icon="chevron-right" color="#ccc" />}
-        onPress={() => router.push('/inicio-sesion')}
-      />
-
-      <List.Item
-        title="Pantalla Principal"
-        titleStyle={{ fontSize: 20, fontWeight: '600' }}
-        style={{
-          backgroundColor: '#f9f8ff',
-          borderRadius: 14,
-          marginBottom: 12,
-          padding: 4,
-          elevation: 2,
-        }}
-        left={() => <List.Icon icon="home" color="#5e88fc" />}
-        right={() => <List.Icon icon="chevron-right" color="#ccc" />}
-        onPress={() => router.push('/pantalla-principal')}
-      />
-
-      <List.Item
-        title="Lista de Elementos"
-        titleStyle={{ fontSize: 20, fontWeight: '600' }}
-        style={{
-          backgroundColor: '#f9f8ff',
-          borderRadius: 14,
-          marginBottom: 12,
-          padding: 4,
-          elevation: 2,
-        }}
-        left={() => <List.Icon icon="format-list-bulleted" color="#ff667c" />}
-        right={() => <List.Icon icon="chevron-right" color="#ccc" />}
-        onPress={() => router.push('/lista-elementos')}
-      />
-
-      <List.Item
-        title="Detalle de Elemento"
-        titleStyle={{ fontSize: 20, fontWeight: '600' }}
-        style={{
-          backgroundColor: '#f9f8ff',
-          borderRadius: 14,
-          marginBottom: 12,
-          padding: 4,
-          elevation: 2,
-        }}
-        left={() => <List.Icon icon="account" color="#9b59b6" />}
-        right={() => <List.Icon icon="chevron-right" color="#ccc" />}
-        onPress={() => router.push('/detalle-elemento')}
-      />
-
-      <List.Item
-        title="Formulario de Registro"
-        titleStyle={{ fontSize: 20, fontWeight: '600' }}
-        style={{
-          backgroundColor: '#f9f8ff',
-          borderRadius: 14,
-          marginBottom: 12,
-          padding: 4,
-          elevation: 2,
-        }}
-        left={() => <List.Icon icon="cog-outline" color="#363636ff" />}
-        right={() => <List.Icon icon="chevron-right" color="#ccc" />}
-        onPress={() => router.push('/formulario-registro')}
-      />
-
-      <List.Item
-        title="Configuración"
-        titleStyle={{ fontSize: 20, fontWeight: '600' }}
-        style={{
-          backgroundColor: '#f9f8ff',
-          borderRadius: 14,
-          marginBottom: 12,
-          padding: 4,
-          elevation: 2,
-        }}
-        left={() => <List.Icon icon="cog" color="#5c5b5bff" />}
-        right={() => <List.Icon icon="chevron-right" color="#ccc" />}
-        onPress={() => router.push('/configuracion')}
-      />
-
-      <List.Item
-        title="Perfil de Usuario"
-        titleStyle={{ fontSize: 20, fontWeight: '600' }}
-        style={{
-          backgroundColor: '#f9f8ff',
-          borderRadius: 14,
-          marginBottom: 12,
-          padding: 4,
-          elevation: 2,
-        }}
-        left={() => <List.Icon icon="account" color="#525151ff" />}
-        right={() => <List.Icon icon="chevron-right" color="#ccc" />}
-        onPress={() => router.push('/perfil-usuario')}
-      />
-
-      <List.Item
-        title="Lista de Servicios"
-        titleStyle={{ fontSize: 20, fontWeight: '600' }}
-        style={{
-          backgroundColor: '#f9f8ff',
-          borderRadius: 14,
-          marginBottom: 12,
-          padding: 4,
-          elevation: 2,
-        }}
-        left={() => <List.Icon icon="book" color="#0086a0ff" />}
-        right={() => <List.Icon icon="chevron-right" color="#ccc" />}
-        onPress={() => router.push('/lista-servicios')}
-      />
+      {items.map((item, index) => (
+        <Animatable.View
+          key={index}
+          animation="fadeInUp"
+          delay={index * 100}
+          duration={600}
+        >
+          <List.Item
+            title={item.title}
+            titleStyle={styles.title}
+            style={styles.card}
+            left={() => <List.Icon icon={item.icon} color={item.color} />}
+            right={() => <List.Icon icon="chevron-right" color="#ccc" />}
+            onPress={() => router.push(item.route)}
+          />
+        </Animatable.View>
+      ))}
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#f4f6fc', padding: 20 },
+  header: {
+    fontSize: 34,
+    fontWeight: 'bold',
+    marginBottom: 25,
+    textAlign: 'center',
+    color: '#333',
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 14,
+    marginBottom: 12,
+    padding: 4,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+  },
+  title: { fontSize: 20, fontWeight: '600', color: '#333' },
+});

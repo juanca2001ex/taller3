@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { TextInput, Button, Text, IconButton } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import usuarios from '../assets/usuarios.json';
 
@@ -26,30 +27,10 @@ export default function InicioSesion() {
     console.log('Sesión iniciada por:', usuario.nombre);
   };
 
-  const iniciarConGoogle = () => {
-    Alert.alert('Iniciar sesión con Google', '¿Deseas continuar con tu cuenta de Google?', [
-      { text: 'Cancelar' },
-      { text: 'Sí', onPress: () => console.log('Google login') },
-    ]);
-  };
-
-  const iniciarConFacebook = () => {
-    Alert.alert('Iniciar sesión con Facebook', '¿Deseas continuar con tu cuenta de Facebook?', [
-      { text: 'Cancelar' },
-      { text: 'Sí', onPress: () => console.log('Facebook login') },
-    ]);
-  };
-
-  const iniciarConApple = () => {
-    Alert.alert('Iniciar sesión con Apple', '¿Deseas continuar con tu cuenta de Apple?', [
-      { text: 'Cancelar' },
-      { text: 'Sí', onPress: () => console.log('Apple login') },
-    ]);
-  };
-
   return (
-    <View style={estilos.contenedor}>
-      {/* Botón Atrás flotante */}
+    <LinearGradient colors={['#4A55A2', '#6A5ACD']} style={estilos.contenedor}>
+      
+      {/* Botón Atrás */}
       <IconButton
         icon="arrow-left"
         size={28}
@@ -58,7 +39,7 @@ export default function InicioSesion() {
         onPress={() => router.push('/')}
       />
 
-      <Text style={estilos.titulo}>INICIAR SESIÓN</Text>
+      <Text style={estilos.titulo}>Iniciar Sesión</Text>
 
       <TextInput
         label="Correo electrónico"
@@ -67,6 +48,7 @@ export default function InicioSesion() {
         mode="outlined"
         style={estilos.campo}
         left={<TextInput.Icon icon="email" />}
+        theme={{ colors: { primary: '#FFA500' } }}
       />
 
       <TextInput
@@ -77,6 +59,7 @@ export default function InicioSesion() {
         secureTextEntry
         style={estilos.campo}
         left={<TextInput.Icon icon="lock" />}
+        theme={{ colors: { primary: '#FFA500' } }}
       />
 
       <TouchableOpacity>
@@ -86,47 +69,48 @@ export default function InicioSesion() {
       <Button
         mode="contained"
         onPress={iniciarSesion}
-        style={estilos.botonIniciar}
+        style={estilos.botonPrincipal}
         textColor="white"
-        buttonColor="#4A90E2"
       >
         INICIAR SESIÓN
       </Button>
 
       <View style={estilos.divisor}>
-        <Text>INGRESA</Text>
+        <Text style={{ color: '#fff' }}>O ingresa con</Text>
       </View>
 
-      <Button
-        mode="contained"
-        icon="google"
-        onPress={iniciarConGoogle}
-        style={[estilos.botonAlternativo, { backgroundColor: '#DB4437' }]}
-        textColor="white"
-      >
-        Google
-      </Button>
+      <View style={estilos.redesContainer}>
+        <Button
+          icon="google"
+          mode="contained"
+          onPress={() => Alert.alert('Google')}
+          style={[estilos.botonRed, { backgroundColor: '#DB4437' }]}
+          textColor="white"
+        >
+          Google
+        </Button>
 
-      <Button
-        mode="contained"
-        icon="facebook"
-        onPress={iniciarConFacebook}
-        style={[estilos.botonAlternativo, { backgroundColor: '#1877F2' }]}
-        textColor="white"
-      >
-        Facebook
-      </Button>
+        <Button
+          icon="facebook"
+          mode="contained"
+          onPress={() => Alert.alert('Facebook')}
+          style={[estilos.botonRed, { backgroundColor: '#1877F2' }]}
+          textColor="white"
+        >
+          Facebook
+        </Button>
 
-      <Button
-        mode="contained"
-        icon="apple"
-        onPress={iniciarConApple}
-        style={[estilos.botonAlternativo, { backgroundColor: '#000000' }]}
-        textColor="white"
-      >
-        Apple
-      </Button>
-    </View>
+        <Button
+          icon="apple"
+          mode="contained"
+          onPress={() => Alert.alert('Apple')}
+          style={[estilos.botonRed, { backgroundColor: '#000000' }]}
+          textColor="white"
+        >
+          Apple
+        </Button>
+      </View>
+    </LinearGradient>
   );
 }
 
@@ -134,10 +118,9 @@ const estilos = StyleSheet.create({
   contenedor: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f0f4f8', // Fondo más suave
   },
   botonAtras: {
-    backgroundColor: '#4A90E2',
+    backgroundColor: 'transparent',
     position: 'absolute',
     top: 20,
     left: 10,
@@ -148,27 +131,32 @@ const estilos = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     marginBottom: 30,
-    color: '#333',
+    color: '#fff',
   },
   campo: {
     marginBottom: 15,
+    backgroundColor: '#f4f4f8',
+    borderRadius: 8,
   },
   olvidoClave: {
     alignSelf: 'flex-end',
-    color: '#4A90E2',
+    color: '#FFA500',
     marginBottom: 20,
   },
-  botonIniciar: {
+  botonPrincipal: {
     marginBottom: 20,
     paddingVertical: 5,
     borderRadius: 8,
+    backgroundColor: '#FFA500',
   },
   divisor: {
     alignItems: 'center',
     marginBottom: 15,
   },
-  botonAlternativo: {
-    marginBottom: 10,
+  redesContainer: {
+    gap: 10,
+  },
+  botonRed: {
     borderRadius: 8,
   },
 });
